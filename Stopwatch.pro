@@ -10,4 +10,5 @@ SOURCES += \
 
 HEADERS += \
         mainwindow.h \
-    timewidget.h
+    timewidget.h \
+    icon.xpm
