@@ -111,6 +111,8 @@ void TimeWidget::stop()
 {
 	// disable stopwatch update
 	updateTimer.stop();
+	// update stopwatch independent of update interval
+	updateStopwatch();
 	// save current time
 	stopTime += timer.elapsed();
 	// stop timer
