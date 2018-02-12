@@ -71,6 +71,8 @@ void TimeWidget::resizeEvent(QResizeEvent* event)
 	{
 		separator[i].setFont(QFont("times", width() / 25, QFont::ExtraLight));
 	}
+
+	event->accept();
 }
 
 void TimeWidget::updateMS()
