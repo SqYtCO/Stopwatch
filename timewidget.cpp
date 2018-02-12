@@ -7,7 +7,7 @@ TimeWidget::TimeWidget(QWidget* parent) : QWidget(parent)
 	setupGUI();
 
 	// set update interval of displayed time
-	updateTimer.setInterval(2);
+	updateTimer.setInterval(3);
 	updateTimer.setSingleShot(false);
 
 	// enable update of displayed time
