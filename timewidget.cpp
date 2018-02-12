@@ -1,10 +1,24 @@
 #include "timewidget.h"
+#include <QTimer>
+#include <thread>
 
 TimeWidget::TimeWidget(QWidget* parent) : QWidget(parent)
 {
+	setupGUI();
+
+	// set update interval of displayed time
+	updateTimer.setInterval(2);
+	updateTimer.setSingleShot(false);
+
+	// enable update of displayed time
+	QObject::connect(&updateTimer, &QTimer::timeout, this, &TimeWidget::updateStopwatch);
+
 	// set timer to 0
 	reset();
+}
 
+void TimeWidget::setupGUI()
+{
 	// setup style of hour
 	hour.setMinimumSize(100, 80);
 	hour.setTextInteractionFlags(Qt::NoTextInteraction);
@@ -59,7 +73,19 @@ TimeWidget::TimeWidget(QWidget* parent) : QWidget(parent)
 	this->setLayout(&layout);
 }
 
-void TimeWidget::resizeEvent(QResizeEvent* event)
+void TimeWidget::updateStopwatch()
+{
+	if(timer.isValid())
+	{
+		// add stoptime to current time and divide it by h/ms, min/ms and s/ms
+		hour.setText(QString::number(((timer.elapsed() + stopTime) / 3600000LL) % 99));
+		minutes.setText(QString::number(((timer.elapsed() + stopTime) / 60000L) % 60));
+		seconds.setText(QString::number(((timer.elapsed() + stopTime) / 1000) % 60));
+		milliseconds.setText(QString::number((timer.elapsed() + stopTime) % 1000));
+	}
+}
+
+void TimeWidget::resizeEvent(QResizeEvent*)
 {
 	// increase / decrease font size on resizeevent
 	hour.setFont(QFont("times", hour.width() / 2));
@@ -71,28 +97,39 @@ void TimeWidget::resizeEvent(QResizeEvent* event)
 	{
 		separator[i].setFont(QFont("times", width() / 25, QFont::ExtraLight));
 	}
-
-	event->accept();
 }
 
-void TimeWidget::updateMS()
+void TimeWidget::start()
 {
-	// increase time by 1
-	time = time.addMSecs(1);
-	// display current time
-	hour.setText(QString::number(time.hour()));
-	minutes.setText(QString::number(time.minute()));
-	seconds.setText(QString::number(time.second()));
-	milliseconds.setText(QString::number(time.msec()));
+	// enable stopwatch update
+	updateTimer.start();
+	// start timer
+	timer.start();
+}
+
+void TimeWidget::stop()
+{
+	// disable stopwatch update
+	updateTimer.stop();
+	// save current time
+	stopTime += timer.elapsed();
+	// stop timer
+	timer.invalidate();
 }
 
 void TimeWidget::reset()
 {
-	// set time to 0
-	time.setHMS(0, 0, 0);
-	// show 0:0:0:000
+	// disable stopwatch update
+	updateTimer.stop();
+	// stop timer
+	timer.invalidate();
+
+	// set text to 0:0:0:000
 	hour.setText("0");
 	minutes.setText("0");
 	seconds.setText("0");
 	milliseconds.setText("000");
+
+	// reset stored stoptime
+	stopTime = 0;
 }

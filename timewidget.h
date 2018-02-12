@@ -4,8 +4,9 @@
 #include <QWidget>
 #include <QHBoxLayout>
 #include <QLabel>
-#include <QTime>
+#include <QTimer>
 #include <QResizeEvent>
+#include <QElapsedTimer>
 
 class TimeWidget : public QWidget
 {
@@ -13,9 +14,14 @@ class TimeWidget : public QWidget
 
 	QHBoxLayout layout;
 
-	// store current time
-	QTime time;
+	// measure time since start
+	QElapsedTimer timer;
+	// update displayed time on timeout of updateTimer
+	QTimer updateTimer;
+	// store current time when stopped
+	uint64_t stopTime;
 
+	// labels to display time
 	QLabel separator[3];
 	QLabel hour;
 	QLabel minutes;
@@ -23,16 +29,23 @@ class TimeWidget : public QWidget
 	QLabel milliseconds;
 
 	// update font size on resize
-	virtual void resizeEvent(QResizeEvent* event) override;
+	virtual void resizeEvent(QResizeEvent*) override;
+
+	void setupGUI();
 
 public:
 	TimeWidget(QWidget* parent = nullptr);
 
+	inline bool isRunning() { return timer.isValid(); }
+
 public slots:
-	// increase time by 1
-	void updateMS();
-	// set time to 00:00:00:000
+	void start();
+	void stop();
 	void reset();
+
+private slots:
+	// update displayed time
+	void updateStopwatch();
 };
 
 #endif // TIMEWIDGET_H

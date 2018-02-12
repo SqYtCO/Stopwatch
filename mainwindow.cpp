@@ -1,22 +1,15 @@
 #include "mainwindow.h"
-
+#include <qdebug.h>
 MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent)
 {
 	setupGUI();
 
-	// emit every ms timeout-signal
-	timer.setInterval(1);
-	timer.setSingleShot(false);
-
-	// increase time on timewidget every ms (timeout)
-	QObject::connect(&timer, &QTimer::timeout, &timewidget, &TimeWidget::updateMS);
-	// start timer on startbutton click
-	QObject::connect(&startbutton, &QPushButton::clicked, &timer, static_cast<void (QTimer::*)()>(&QTimer::start));
-	// stop timer on stopbutton click
-	QObject::connect(&stopbutton, &QPushButton::clicked, &timer, &QTimer::stop);
-	// reset timewidget and timer on resetbutton click
+	// on startbutton-click: if stopwatch is not running, start it
+	QObject::connect(&startbutton, &QPushButton::clicked, [this]() { if(!timewidget.isRunning()) timewidget.start(); });
+	// on stopbutton-click: if stopwatch is running, stop it
+	QObject::connect(&stopbutton, &QPushButton::clicked, [this]() { if(timewidget.isRunning()) timewidget.stop(); });
+	// on resetbutton-click: reset stopwatch
 	QObject::connect(&resetbutton, &QPushButton::clicked, &timewidget, &TimeWidget::reset);
-	QObject::connect(&resetbutton, &QPushButton::clicked, &timer, &QTimer::stop);
 }
 
 void MainWindow::setupGUI()

@@ -11,8 +11,9 @@ class MainWindow : public QMainWindow
 {
 	QGridLayout grid;
 
+	// manage timer and display time
 	TimeWidget timewidget;
-	QTimer timer;
+	// control buttons
 	QPushButton startbutton;
 	QPushButton stopbutton;
 	QPushButton resetbutton;
