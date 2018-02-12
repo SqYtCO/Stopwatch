@@ -1,2 +1,2 @@
 # Stopwatch
-Small and lightweight stopwatch written in C++ with Qt
+Simple and lightweight stopwatch written in C++ with Qt
