@@ -9,8 +9,6 @@
 
 class MainWindow : public QMainWindow
 {
-	Q_OBJECT
-
 	QGridLayout grid;
 
 	TimeWidget timewidget;
