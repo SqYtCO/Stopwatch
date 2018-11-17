@@ -5,7 +5,7 @@
 #include <QMainWindow>
 #include <QGridLayout>
 #include <QPushButton>
-#include <QTimer>
+#include <QAction>
 
 class MainWindow : public QMainWindow
 {
@@ -17,6 +17,10 @@ class MainWindow : public QMainWindow
 	QPushButton startbutton;
 	QPushButton stopbutton;
 	QPushButton resetbutton;
+
+	QAction startaction;
+	QAction stopaction;
+	QAction resetaction;
 
 	void setupGUI();
 
