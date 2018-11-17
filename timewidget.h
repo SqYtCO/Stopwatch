@@ -6,7 +6,7 @@
 #include <QLabel>
 #include <QElapsedTimer>
 #include <QTimer>
-#include <QResiveEvent>
+#include <QResizeEvent>
 
 class TimeWidget : public QWidget
 {
