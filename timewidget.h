@@ -19,7 +19,7 @@ class TimeWidget : public QWidget
 	// update displayed time on timeout of updateTimer
 	QTimer updateTimer;
 	// store current time when stopped
-	uint64_t stopTime;
+	std::size_t stopTime;
 
 	// labels to display time
 	QLabel separator[3];

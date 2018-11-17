@@ -76,9 +76,9 @@ void TimeWidget::updateStopwatch()
 	if(timer.isValid())
 	{
 		// add stoptime to current time and divide it by h/ms, min/ms and s/ms
-		hour.setText(QString::number(((timer.elapsed() + stopTime) / 3600000LL) % 99));
-		minutes.setText(QString::number(((timer.elapsed() + stopTime) / 60000L) % 60));
-		seconds.setText(QString::number(((timer.elapsed() + stopTime) / 1000) % 60));
+		hour.setText(QString::number(((timer.elapsed() + stopTime) / 3600000UL) % 99));
+		minutes.setText(QString::number(((timer.elapsed() + stopTime) / 60000UL) % 60));
+		seconds.setText(QString::number(((timer.elapsed() + stopTime) / 1000UL) % 60));
 		milliseconds.setText(QString::number((timer.elapsed() + stopTime) % 1000));
 	}
 }
