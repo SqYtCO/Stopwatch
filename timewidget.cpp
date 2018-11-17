@@ -1,6 +1,5 @@
 #include "timewidget.h"
 #include <QTimer>
-#include <thread>
 
 TimeWidget::TimeWidget(QWidget* parent) : QWidget(parent)
 {
