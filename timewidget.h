@@ -4,9 +4,8 @@
 #include <QWidget>
 #include <QHBoxLayout>
 #include <QLabel>
-#include <QTimer>
-#include <QResizeEvent>
 #include <QElapsedTimer>
+#include <QTimer>
 
 class TimeWidget : public QWidget
 {
